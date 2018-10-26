@@ -30,9 +30,9 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
-            new Person(new Name("Admin Account"), new Nric("S1230000E"), new Password("Password"),
-                    new Phone("96469770"), new Email("admin@abcompany.com"), new Department("Admin Management"),
-                    new PriorityLevel(PriorityLevelEnum.ADMINISTRATOR.getPriorityLevelCode()),
+            new Person(new Name("Highest Admin Account"), new Nric("S1230000E"), new Password("Password"),
+                    new Phone("96469770"), new Email("admin@abcompany.com"), new Department("I.T. Management"),
+                    new PriorityLevel(PriorityLevelEnum.IT_UNIT.getPriorityLevelCode()),
                     new Address("AB Company Office, Singapore"), new Mode("out"),
                     getTagSet("ADMINISTRATOR", "S1230000E", "Password"),
                     getScheduleSet("1300", "1400", "Level 5")),

@@ -35,6 +35,25 @@ image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+.  A sample list of contacts will be provided when the application is first run.
+.List of prefixes
+|===
+|Name |NRIC |Password |Priority Level
+|Admin Account
+|S1230000E
+|Password
+|I.T. Unit (Highest Priority Level)
+
+|Alex Yeoh
+|S1234567E
+|Password
+|ADMINISTRATOR
+
+|Bernice Yu
+|T1234567E
+|Password
+|BASIC (Lowest Priority Level)
+|===
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts

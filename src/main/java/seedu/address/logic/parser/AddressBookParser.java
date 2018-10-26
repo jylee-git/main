@@ -26,6 +26,7 @@ import seedu.address.logic.commands.ListLeaveCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ResetCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetPriorityLevelCommand;
@@ -138,6 +139,8 @@ public class AddressBookParser {
         case SetPriorityLevelCommand.COMMAND_WORD:
             return new SetPriorityLevelCommandParser().parse(arguments);
 
+        case ResetCommand.COMMAND_WORD:
+            return new ResetCommand();
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
