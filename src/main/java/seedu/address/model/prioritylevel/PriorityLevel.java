@@ -20,6 +20,9 @@ public class PriorityLevel {
     public static final String INSUFFICIENT_PRIORITY_LEVEL = "You must have a priority level of at least %s to perform "
             + " this operation.";
 
+    public static final String NOTOF_CERTAIN_PRIORITYLEVEL = "You need to be holding a priority level of %s to perform"
+            + "this operation.";
+
     public final int priorityLevelCode;
 
     public PriorityLevel(int priorityLevelCode) {
