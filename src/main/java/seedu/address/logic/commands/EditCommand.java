@@ -14,7 +14,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -43,36 +45,32 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person "
+            + "who is currently logged in to the session. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_DEPARTMENT + "DEPARTMENT] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final Index index;
+    private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
+
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(index);
+    public EditCommand(EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(editPersonDescriptor);
-
-        this.index = index;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
@@ -83,15 +81,9 @@ public class EditCommand extends Command {
         if (!sessionManager.isLoggedIn()) {
             throw new CommandException(SessionManager.NOT_LOGGED_IN);
         }
-
-        List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToEdit = lastShownList.get(index.getZeroBased());
+        Person personToEdit = sessionManager.getLoggedInPersonDetails();
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        logger.info("Editing person: " + personToEdit.getName() + "(" + personToEdit.getNric() + ")...");
 
         model.updatePerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -134,8 +126,7 @@ public class EditCommand extends Command {
 
         // state check
         EditCommand e = (EditCommand) other;
-        return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor);
+        return editPersonDescriptor.equals(e.editPersonDescriptor);
     }
 
     /**
@@ -276,7 +267,6 @@ public class EditCommand extends Command {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getDepartment().equals(e.getDepartment())
-
                     && getAddress().equals(e.getAddress())
                     && getSchedule().equals(e.getSchedule())
                     && getTags().equals(e.getTags());
