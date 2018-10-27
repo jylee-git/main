@@ -26,6 +26,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CheckCommand;
+import seedu.address.logic.commands.CheckLoginStatusCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteLeaveCommand;
@@ -40,7 +41,9 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListDepartmentCommand;
 import seedu.address.logic.commands.ListLeaveCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ResetCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetDepartmentCommand;
@@ -104,6 +107,12 @@ public class AddressBookParserTest {
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
+    }
+
+    @Test
+    public void parseCommand_reset() throws Exception {
+        assertTrue(parser.parseCommand(ResetCommand.COMMAND_WORD) instanceof ResetCommand);
+        assertTrue(parser.parseCommand(ResetCommand.COMMAND_WORD + " 3") instanceof ResetCommand);
     }
 
     @Test
@@ -215,6 +224,19 @@ public class AddressBookParserTest {
     public void parseCommand_setPriorityLevel() throws Exception {
         assertTrue(parser.parseCommand(SetPriorityLevelCommand.COMMAND_WORD + " 2 " + PREFIX_PRIORITYLEVEL
                 + "3") instanceof SetPriorityLevelCommand);
+    }
+
+    @Test
+    public void parseCommand_checkLoginStatus() throws Exception {
+        assertTrue(parser.parseCommand(CheckLoginStatusCommand.COMMAND_WORD) instanceof CheckLoginStatusCommand);
+        assertTrue(parser.parseCommand(CheckLoginStatusCommand.COMMAND_WORD + " hi")
+                instanceof CheckLoginStatusCommand);
+    }
+
+    @Test
+    public void parseCommand_logout() throws Exception {
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD) instanceof LogoutCommand);
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD + " hi") instanceof LogoutCommand);
     }
 
     @Test

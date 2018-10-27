@@ -22,6 +22,7 @@ public class ResetCommand extends Command {
 
     /**
      * Forcefully deletes data/addressBook.xml and calls exit program.
+     * This should return exitCommand's commandResult as the app will exit upon reset.
      */
     public CommandResult execute(Model model, CommandHistory commandHistory) throws CommandException {
         SessionManager sessionManager = SessionManager.getInstance(model);
