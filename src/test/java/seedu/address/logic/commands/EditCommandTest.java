@@ -18,15 +18,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.jupiter.api.Assertions;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.session.Session;
 import seedu.address.session.SessionManager;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -169,6 +172,27 @@ public class EditCommandTest {
         // redo -> same first person edited again
         expectedModel.redoAddressBook();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    /**
+     * This test attempts to edit all unmodifiable parameters and does not include any modifiable fields.
+     * This test should succeed, but the person SHOULD NOT be edited.
+     */
+    @Test
+    public void execute_editUneditableFields_success() throws CommandException {
+        Person editedPerson = new PersonBuilder(ALICE).withNric("G8888888E").withPassword("qwerty33")
+                .withDepartment("Test Management").withPriorityLevel(0).build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.updatePerson(ALICE, ALICE);
+        expectedModel.commitAddressBook();
+
+        sessionManager.destroy();
+        sessionManager = SessionManager.getInstance(model);
+        sessionManager.loginToSession(ALICE.getNric(), ALICE.getPassword());
+
+        assertCommandSuccess(new EditCommand(descriptor), model, commandHistory,
+                String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, ALICE), expectedModel);
     }
 
     @Test

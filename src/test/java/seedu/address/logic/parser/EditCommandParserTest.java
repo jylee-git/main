@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DEPARTMENT_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
@@ -10,8 +11,11 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.PRIORITYLEVEL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
@@ -173,5 +177,17 @@ public class EditCommandParserTest {
         EditCommand expectedCommand = new EditCommand(descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    /**
+     * This test attempts to parse all non-editable fields (NRIC, pasword, department and priorityLevel), and
+     *  no editable fields specified.
+     * This test should fail.
+     */
+    @Test
+    public void parse_allNonEditableAndNoEditableFields_fail() {
+        String userInput = NRIC_DESC_AMY + PASSWORD_DESC_AMY + DEPARTMENT_DESC_AMY + PRIORITYLEVEL_DESC_AMY;
+        assertParseFailure(parser, userInput,
+                EditCommand.MESSAGE_NOT_EDITED + "\n\n" + EditCommand.MESSAGE_USAGE);
     }
 }

@@ -97,13 +97,12 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Mode updatedMode = personToEdit.getMode(); // edit command does not allow editing modes
         Set<Schedule> updatedSchedule = editPersonDescriptor.getSchedule().orElse(personToEdit.getSchedule());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, personToEdit.getNric(),
                 personToEdit.getPassword(), updatedPhone, updatedEmail, personToEdit.getDepartment(),
-                personToEdit.getPriorityLevel(), updatedAddress, updatedMode, updatedTags, updatedSchedule);
+                personToEdit.getPriorityLevel(), updatedAddress, personToEdit.getMode(), updatedTags, updatedSchedule);
     }
 
     @Override
