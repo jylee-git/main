@@ -39,7 +39,7 @@ public class EditCommandTest {
     private static final Person ALICEFOREDIT = new PersonBuilder().withName("Alice Pauline")
             .withNric("T2457888E").withPassword("ASd654").withPriorityLevel(0)
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@gmail.com")
-            .withPhone("85355255")
+            .withPhone("85355255").withDepartment(ALICE.getDepartment().toString())
             .withTags("friends").build();
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
