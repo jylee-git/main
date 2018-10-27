@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
-//@@author Woonhian
 public class DepartmentTest {
 
     @Test
@@ -31,7 +30,7 @@ public class DepartmentTest {
         assertFalse(Department.isValidDepartment(" ")); // spaces only
         assertFalse(Department.isValidDepartment("^")); // only non-alphanumeric characters
         assertFalse(Department.isValidDepartment("junior*")); // contains non-alphanumeric characters
-        assertFalse(Department.isValidDepartment("Junior")); // does not end with Management
+        assertFalse(Department.isValidDepartment("Junior Manage")); // does not end with Management
         assertFalse(Department.isValidDepartment("Jun1or Management")); // contains alphanumeric characters
 
         // valid department name

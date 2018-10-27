@@ -10,7 +10,7 @@ import seedu.address.testutil.Assert;
 public class NricTest {
 
     @Test
-    public void constructor_null_throwsNullPointerExceptio() {
+    public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new Nric(null));
     }
 

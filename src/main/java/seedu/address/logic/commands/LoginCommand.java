@@ -26,7 +26,7 @@ public class LoginCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Enables the use of the application by logging in"
             + " using the specified personnel's NRIC and password.\n"
             + "Parameters: " + PREFIX_NRIC + "NRIC " + PREFIX_PASSWORD + "PASSWORD\n"
-            + "Example:" + COMMAND_WORD + " " + PREFIX_NRIC + "S9724688J "
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NRIC + "S9724688J "
             + PREFIX_PASSWORD + "NeUeR2018";
 
     public static final String INVALID_LOGIN_CREDENTIALS = "Login failed. Incorrect NRIC and/or password.";

@@ -17,7 +17,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-//@@author Woonhian
+//Reused from https://github.com/CS2103JAN2018-F14-B1/main/pull/57/files with minor modifications
 public class SortCommandTest {
 
     @Rule

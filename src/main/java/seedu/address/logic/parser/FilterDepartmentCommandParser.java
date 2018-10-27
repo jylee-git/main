@@ -8,7 +8,6 @@ import seedu.address.logic.commands.FilterDepartmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
 
-//@@author Woonhian
 /**
  * Parses input arguments and creates a new FilterDepartmentCommand object
  */

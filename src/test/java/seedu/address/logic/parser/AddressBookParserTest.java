@@ -6,9 +6,14 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD_AMY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITYLEVEL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_START;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -33,9 +38,14 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListDepartmentCommand;
 import seedu.address.logic.commands.ListLeaveCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetDepartmentCommand;
+import seedu.address.logic.commands.SetPriorityLevelCommand;
+import seedu.address.logic.commands.SetScheduleCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -146,7 +156,14 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_lisLeave() throws Exception {
+    public void parseCommand_listDepartment() throws Exception {
+        assertTrue(parser.parseCommand(ListDepartmentCommand.COMMAND_WORD) instanceof ListDepartmentCommand);
+        assertTrue(parser.parseCommand(ListDepartmentCommand.COMMAND_WORD + " 3")
+                instanceof ListDepartmentCommand);
+    }
+
+    @Test
+    public void parseCommand_listLeave() throws Exception {
         assertTrue(parser.parseCommand(ListLeaveCommand.COMMAND_WORD) instanceof ListLeaveCommand);
         assertTrue(parser.parseCommand(ListLeaveCommand.COMMAND_WORD + " 3") instanceof ListLeaveCommand);
     }
@@ -175,6 +192,29 @@ public class AddressBookParserTest {
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_schedule() throws Exception {
+        assertTrue(parser.parseCommand(ScheduleCommand.COMMAND_WORD + " 1") instanceof ScheduleCommand);
+    }
+
+    @Test
+    public void parseCommand_setSchedule() throws Exception {
+        assertTrue(parser.parseCommand(SetScheduleCommand.COMMAND_WORD + " 1 " + PREFIX_TIME_START
+                + "1000 " + PREFIX_TIME_END + "1600 " + PREFIX_VENUE + "Toilet") instanceof SetScheduleCommand);
+    }
+
+    @Test
+    public void parseCommand_setDepartment() throws Exception {
+        assertTrue(parser.parseCommand(SetDepartmentCommand.COMMAND_WORD + " 2 " + PREFIX_DEPARTMENT
+                + "Junior Management") instanceof SetDepartmentCommand);
+    }
+
+    @Test
+    public void parseCommand_setPriorityLevel() throws Exception {
+        assertTrue(parser.parseCommand(SetPriorityLevelCommand.COMMAND_WORD + " 2 " + PREFIX_PRIORITYLEVEL
+                + "3") instanceof SetPriorityLevelCommand);
     }
 
     @Test

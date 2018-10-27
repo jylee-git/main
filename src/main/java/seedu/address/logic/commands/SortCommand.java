@@ -8,7 +8,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.exceptions.NoEmployeeException;
 
 
-//@@author Woonhian
+//Reused from https://github.com/CS2103JAN2018-F14-B1/main/pull/57/files with minor modifications
 /**
  * Sort all employees in address book by name or department in ascending or descending order.
  */

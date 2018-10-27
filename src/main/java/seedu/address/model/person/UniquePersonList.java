@@ -105,10 +105,9 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
-    //@@author Woonhian
+    //Reused from https://github.com/CS2103JAN2018-F14-B1/main/pull/57/files with minor modifications
     /**
      * Sorts employees by name or department in ascending or descending order.
-     * @return
      */
     public void sortBy(String field, String order) throws NoEmployeeException {
         if (internalList.size() < 1) {
@@ -133,7 +132,17 @@ public class UniquePersonList implements Iterable<Person> {
         Comparator<Person> departmentComparator = new Comparator<Person>() {
             @Override
             public int compare(Person p1, Person p2) {
-                return p1.getDepartment().fullDepartment.compareTo(p2.getDepartment().fullDepartment);
+                String x1 = p1.getDepartment().fullDepartment;
+                String x2 = p2.getDepartment().fullDepartment;
+                int sComp = x1.compareTo(x2);
+
+                if (sComp != 0) {
+                    return sComp;
+                }
+
+                String x3 = p1.getName().fullName;
+                String x4 = p2.getName().fullName;
+                return x3.compareTo(x4);
             }
         };
 
@@ -152,11 +161,11 @@ public class UniquePersonList implements Iterable<Person> {
 
         switch (order) {
         case "asc":
-            Collections.sort(internalList, comparator);
+            internalList.sort(comparator);
             break;
 
         case "desc":
-            Collections.sort(internalList, Collections.reverseOrder(comparator));
+            internalList.sort(Collections.reverseOrder(comparator));
             break;
 
         default:

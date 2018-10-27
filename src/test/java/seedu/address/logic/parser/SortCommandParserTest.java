@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 
 import org.junit.Test;
 
-//@@author Woonhian
+//Reused from https://github.com/CS2103JAN2018-F14-B1/main/pull/57/files with minor modifications
 public class SortCommandParserTest {
 
     private SortCommandParser parser = new SortCommandParser();

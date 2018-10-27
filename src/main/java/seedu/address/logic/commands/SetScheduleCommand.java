@@ -32,9 +32,9 @@ public class SetScheduleCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: "
             + COMMAND_WORD + " 1 "
-            + PREFIX_TIME_START + " 1000 "
-            + PREFIX_TIME_END + " 1600 "
-            + PREFIX_VENUE + " Toilet\n";
+            + PREFIX_TIME_START + "1000 "
+            + PREFIX_TIME_END + "1600 "
+            + PREFIX_VENUE + "Toilet\n";
 
     public static final String MESSAGE_SCHEDULE_SUCCESS = "Set Schedule Successful";
     public static final String MESSAGE_SCHEDULE_FAIL = "Set Schedule Failed.";

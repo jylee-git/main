@@ -22,7 +22,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
 
-//@@author Woonhian
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */

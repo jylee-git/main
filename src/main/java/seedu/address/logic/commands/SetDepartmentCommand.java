@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITYLEVEL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEPARTMENT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -12,35 +12,36 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Department;
 import seedu.address.model.person.Person;
 import seedu.address.model.prioritylevel.PriorityLevel;
 import seedu.address.model.prioritylevel.PriorityLevelEnum;
 import seedu.address.session.SessionManager;
 
-//@@author jylee-git
 /**
- * This command sets the priority level of other users.
+ * This command sets the department of other users.
  */
-public class SetPriorityLevelCommand extends Command {
+public class SetDepartmentCommand extends Command {
 
-    public static final String COMMAND_WORD = "setplvl";
+    public static final String COMMAND_WORD = "setdepartment";
+    public static final String COMMAND_ALIAS = "sd";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the priority level of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the department of the person identified "
             + "by the index number used in the displayed person list.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_PRIORITYLEVEL + "PRIORITYLEVEL\n"
-            + "Example: " + COMMAND_WORD + " 2 " + PREFIX_PRIORITYLEVEL + "3";
+            + PREFIX_DEPARTMENT + "DEPARTMENT\n"
+            + "Example: " + COMMAND_WORD + " 2 " + PREFIX_DEPARTMENT + "Junior Management";
 
-    public static final String MESSAGE_CHANGE_PLVL_SUCCESS = "Successfully changed the priority level of %s to %s";
-    public static final String MESSAGE_CANNOT_EDIT_OWN_PLVL = "You can't edit your own priority level.";
+    public static final String MESSAGE_CHANGE_DEPARTMENT_SUCCESS = "Successfully changed the department of %s to %s";
+    public static final String MESSAGE_CANNOT_EDIT_OWN_DEPARTMENT = "You can't edit your own department.";
 
     private final Index index;
-    private final PriorityLevel priorityLevel;
+    private final Department department;
 
-    public SetPriorityLevelCommand (Index index, PriorityLevel priorityLevel) {
-        requireAllNonNull (index, priorityLevel);
+    public SetDepartmentCommand (Index index, Department department) {
+        requireAllNonNull (index, department);
         this.index = index;
-        this.priorityLevel = priorityLevel;
+        this.department = department;
     }
 
     @Override
@@ -51,6 +52,7 @@ public class SetPriorityLevelCommand extends Command {
         if (!sessionManager.isLoggedIn()) {
             throw new CommandException(SessionManager.NOT_LOGGED_IN);
         }
+
         /**
          * Throws exception if user does not have the required access level.
          */
@@ -67,7 +69,7 @@ public class SetPriorityLevelCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         if (personToEdit == sessionManager.getLoggedInPersonDetails()) {
-            throw new CommandException(MESSAGE_CANNOT_EDIT_OWN_PLVL);
+            throw new CommandException(MESSAGE_CANNOT_EDIT_OWN_DEPARTMENT);
         }
 
         Person editedPerson = new Person(
@@ -76,8 +78,8 @@ public class SetPriorityLevelCommand extends Command {
                 personToEdit.getPassword(),
                 personToEdit.getPhone(),
                 personToEdit.getEmail(),
-                personToEdit.getDepartment(),
-                priorityLevel,
+                department,
+                personToEdit.getPriorityLevel(),
                 personToEdit.getAddress(),
                 personToEdit.getMode(),
                 personToEdit.getTags(),
@@ -87,15 +89,15 @@ public class SetPriorityLevelCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
 
-        return new CommandResult(String.format(MESSAGE_CHANGE_PLVL_SUCCESS,
-                editedPerson.getName(), priorityLevel));
+        return new CommandResult(String.format(MESSAGE_CHANGE_DEPARTMENT_SUCCESS,
+                editedPerson.getName(), department));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof SetPriorityLevelCommand // instanceof handles nulls
-                && (index.equals(((SetPriorityLevelCommand) other).index)
-                && priorityLevel.equals(((SetPriorityLevelCommand) other).priorityLevel)));
+                || (other instanceof SetDepartmentCommand // instanceof handles nulls
+                && (index.equals(((SetDepartmentCommand) other).index)
+                && department.equals(((SetDepartmentCommand) other).department)));
     }
 }
