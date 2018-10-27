@@ -20,6 +20,9 @@ import seedu.address.session.SessionManager;
 public class ResetCommand extends Command {
     public static final String COMMAND_WORD = "reset";
 
+    /**
+     * Forcefully deletes data/addressBook.xml and calls exit program.
+     */
     public CommandResult execute(Model model, CommandHistory commandHistory) throws CommandException {
         SessionManager sessionManager = SessionManager.getInstance(model);
         if (!sessionManager.isLoggedIn()) {
