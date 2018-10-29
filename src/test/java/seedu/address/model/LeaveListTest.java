@@ -53,7 +53,7 @@ public class LeaveListTest {
     @Test
     public void resetData_withDuplicateLeaves_throwsDuplicateLeaveException() {
         // Two leave with the same date and identity fields
-        Leave editedLeave = new LeaveBuilder(REQUEST_1).withNric("S1234567A").withDate("01/02/2018")
+        Leave editedLeave = new LeaveBuilder(REQUEST_1).withNric("S1234567A").withDate("01/02/2020")
                 .build();
         List<Leave> newLeaves = Arrays.asList(REQUEST_1, editedLeave);
         LeaveListStub newData = new LeaveListStub(newLeaves);

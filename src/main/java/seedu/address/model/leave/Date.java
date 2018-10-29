@@ -3,15 +3,17 @@ package seedu.address.model.leave;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 
+//@@author Hafizuddin-NUS
 /**
  * Represents a Leave's date in the leave list.
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
 public class Date {
 
-    public static final String MESSAGE_DATE_CONSTRAINTS = "Wrong date format";
+    public static final String MESSAGE_DATE_CONSTRAINTS = "Wrong date format (DD/MM/YYYY) or date has passed.";
 
     public final String date;
 
@@ -51,6 +53,15 @@ public class Date {
         if (year < 2018) {
             return false;
         }
+
+        try {
+            if (new SimpleDateFormat("dd/MM/yyyy").parse(date).before(new java.util.Date())) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
         return day >= 1 && day <= 31;
 
     }

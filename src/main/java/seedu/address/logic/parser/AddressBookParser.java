@@ -15,6 +15,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteLeaveCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditLeaveCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterDepartmentCommand;
 import seedu.address.logic.commands.FilterLeaveCommand;
@@ -137,6 +138,7 @@ public class AddressBookParser {
             return new CheckCommandParser().parse(arguments);
 
         case DeleteLeaveCommand.COMMAND_WORD:
+        case DeleteLeaveCommand.COMMAND_ALIAS:
             return new DeleteLeaveCommandParser().parse(arguments);
 
         case FilterLeaveCommand.COMMAND_WORD:
@@ -145,6 +147,12 @@ public class AddressBookParser {
 
         case ListLeaveCommand.COMMAND_WORD:
             return new ListLeaveCommand();
+
+        case EditLeaveCommand.COMMAND_APPROVE:
+            return new ApproveLeaveCommandParser().parse(arguments);
+
+        case EditLeaveCommand.COMMAND_REJECT:
+            return new RejectLeaveCommandParser().parse(arguments);
 
         case SetPriorityLevelCommand.COMMAND_WORD:
             return new SetPriorityLevelCommandParser().parse(arguments);

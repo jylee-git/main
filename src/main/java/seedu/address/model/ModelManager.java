@@ -129,7 +129,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addLeave(Leave leave) {
         versionedLeaveList.addRequest(leave);
-        //updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredLeaveList(PREDICATE_SHOW_ALL_LEAVES);
         indicateLeaveListChanged();
     }
 
@@ -146,14 +146,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    /*
     @Override
     public void updateLeave(Leave target, Leave editedLeave) {
         requireAllNonNull(target, editedLeave);
 
         versionedLeaveList.updateRequest(target, editedLeave);
         indicateLeaveListChanged();
-    }*/
+    }
 
     //=========== Filtered Person List Accessors =============================================================
 

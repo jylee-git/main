@@ -9,16 +9,23 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalLeave.getTypicalLeaveList;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.leave.Leave;
+import seedu.address.model.prioritylevel.PriorityLevelEnum;
+import seedu.address.session.SessionManager;
+import systemtests.SessionHelper;
 
+//@@author Hafizuddin-NUS
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
  * {@code DeleteLeaveCommand}.
@@ -28,11 +35,15 @@ public class DeleteLeaveCommandTest {
     private Model model = new ModelManager(getTypicalLeaveList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
+    @Before
+    public void setUp() {
+        SessionHelper.forceLoginWithPriorityLevelOf(PriorityLevelEnum.IT_UNIT.getPriorityLevelCode());
+    }
+
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Leave leaveToDelete = model.getFilteredLeaveList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteLeaveCommand deleteLeaveCommand = new DeleteLeaveCommand(INDEX_FIRST_PERSON);
-        deleteLeaveCommand.setIsLogin(false);
 
         String expectedMessage = String.format(DeleteLeaveCommand.MESSAGE_DELETE_LEAVE_SUCCESS, leaveToDelete);
 
@@ -57,7 +68,6 @@ public class DeleteLeaveCommandTest {
 
         Leave leaveToDelete = model.getFilteredLeaveList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteLeaveCommand deleteLeaveCommand = new DeleteLeaveCommand(INDEX_FIRST_PERSON);
-        deleteLeaveCommand.setIsLogin(false);
 
         String expectedMessage = String.format(DeleteLeaveCommand.MESSAGE_DELETE_LEAVE_SUCCESS, leaveToDelete);
 
@@ -111,5 +121,22 @@ public class DeleteLeaveCommandTest {
         model.updateFilteredLeaveList(p -> false);
 
         assertTrue(model.getFilteredLeaveList().isEmpty());
+    }
+
+    /**
+     * Logs out of the application after each test
+     */
+    @After
+    public void tearDown() throws CommandException {
+        try {
+            new LogoutCommand().execute(model, commandHistory);
+        } catch (CommandException ce) {
+            //Ignores the CommandException if user is not logged in in the first place.
+            if (!ce.getMessage().equals(LogoutCommand.NOT_LOGGED_IN)) {
+                throw new CommandException(ce.getMessage());
+            }
+        } finally {
+            SessionManager.getInstance(model).destroy();
+        }
     }
 }
