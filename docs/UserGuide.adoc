@@ -36,10 +36,11 @@ image::Ui.png[width="790"]
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  A sample list of contacts will be provided when the application is first run.
-.List of prefixes
+
+.List of user accounts at first launch or upon reset
 |===
 |Name |NRIC |Password |Priority Level
-|Admin Account
+|Highest Admin Account
 |S1230000E
 |Password
 |I.T. Unit (Highest Priority Level)
@@ -56,6 +57,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |===
 .  Some example commands you can try:
 
+* *`login ic/S1234567E pwd/Password`* : Log in as Alex Yeoh, with a priority level of ADMINISTRATOR.
 * *`list`* : lists all contacts
 * `*add* n/John Doe ic/S9458861T pwd/Password p/98765432 e/johnd@example.com d/Junior Management
 a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney` : adds a contact named `John Doe` to the Address Book.
@@ -114,10 +116,10 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits the existing particulars of the logged in user. +
-Format : `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DEPARTMENT] [t/TAG]...` +
+Format : `edit [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the personal details of the user who is logged in.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -126,16 +128,15 @@ Format : `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DEPARTMENT] [t/
 ** Name: n/NAME
 ** Address: a/ADDRESS
 ** Phone: p/PHONE_NUMBER
-** Department: d/DEPARTMENT
 ** Tag(s): t/TAG1 t/TAG2 ...
 ****
 
 Examples:
 
-* `edit 2 p/91234567 e/johndoe@example.com` +
-Set the second person listed in the address book to the aforementioned email and phone number, and also clears tags if any. +
-* `edit 3 t/friend t/lecturer n/John Doe` +
-Changes the name of the third person in the address book to by John Doe; clears all tag and sets the two aforementioned tags. +
+* `edit p/91234567 e/johndoe@example.com` +
+Sets the logged in person's details to the aforementioned email and phone number, and also clears tags if any. +
+* `edit t/friend t/lecturer n/John Doe` +
+Sets the logged in person's details to the name of John Doe; clears all tag and sets the two aforementioned tags. +
 
 === Locating persons by name: `find`
 
@@ -143,11 +144,11 @@ Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case insensitive. e.g *hans* will match *Hans*
+* The order of the keywords does not matter. e.g. *Hans Bo* will match *Bo Hans*
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched e.g. *Han* will not match *Hans*
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. *Hans Bo* will return *Hans Gruber*, *Bo Yang*
 ****
 
 Examples:
@@ -417,7 +418,7 @@ Sets PaS88of as a password for John Doe.
 === Login to the application: `login`
 Logs in to the application using a registered NRIC and password. +
 Format: `login ic/NRIC pwd/PASSWORD` +
-Example: `login ic/T1234567U pwd/NeUeR2018`
+Example: `login ic/T1234567E pwd/Password`
 
 === Checks the login status of the application: `checkloginstatus`
 Prints whether this application is logged in. +
@@ -525,7 +526,7 @@ Sets the priority level of an employee. +
 Format: `priority ic/NRIC superuser/LEVEL` +
 Example: `priority ic/s1234567a superuser/2`
 
-=== Restrict access to BankAB : `restrict`
+=== Restrict access to BankAB : `restrict`  (To be implemented in v1.4 and beyond)
 [NOTE]
 ====
 This operation requires those with privilege of `I.T. Unit` to perform.
@@ -533,6 +534,15 @@ This operation requires those with privilege of `I.T. Unit` to perform.
 Restrict access to BankAB for maintenance to all employees except superusers level 4 (Technicians).
 Anyone below superuser level 4 priority will not be able to log into the application. +
 Format: `restrict`
+
+=== Reset the application : `reset`
+[NOTE]
+====
+This operation requires user to be logged in with a priviledge level of `I.T. Unit` to perform.
+====
+Resets the application into a clean slate, by deleting data/AddressBook.xml. The application will also close upon
+deleting data/AddressBook.xml. +
+Format: `reset`
 
 === Exiting the program : `exit`
 
@@ -557,7 +567,7 @@ There is no need to save manually.
 •	*Set schedule*: `setschedule INDEX ts/TIME_START te/TIME_END v/VENUE`
 •	*Access payroll*: `payroll n/NAME ic/NRIC pass/PASSWORD`
 •	*Apply off days*: `applyoff n/NAME ic/NRIC pass/PASSWORD date/DATE`
-•	*Edit particulars*: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]....`
+•	*Edit particulars*: `edit [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]....`
 •	*Set priority level*: `setplvl INDEX plvl/PRIORITY_LEVEL`
 •	*Add employee*: `add n/NAME ic/NRIC pwd/PASSWORD p/PHONE NUMBER e/EMAIL d/DEPARTMENT a/ADDRESS [plvl/PRIORITY_LEVEL] [t/TAGS]...`
 //•	*Setting password*: `setpass n/NAME ic/s1234567h sp/PASSWORD`
@@ -574,6 +584,7 @@ There is no need to save manually.
 •	*Filter leave applications*: `filterleave NRIC`
 •	*Delete leave application*: `deleteleave INDEX`
 //•	*Restrict access to BankAB*: `restrict`
+•	*Reset the application*: `reset`
 
 == Appendix A: List of prefixes in the application
 .List of prefixes
@@ -587,7 +598,7 @@ There is no need to save manually.
 
 | NRIC Number
 | ic/NRIC
-| NRIC should start with a character [S, T, F, G], followed by a seven-digit number, and ending with a upper-case
+| NRIC should start with an upper-case character [S, T, F, G], followed by a seven-digit number, and ending with a upper-case
 alphabet.
 | ic/S9203948E
 
