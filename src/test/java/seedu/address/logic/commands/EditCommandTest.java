@@ -117,28 +117,6 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_filteredList_success() throws CommandException {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        Person editedPerson = new PersonBuilder(personInFilteredList).withName(VALID_NAME_BOB).build();
-        EditCommand editCommand = new EditCommand(new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-        expectedModel.commitAddressBook();
-
-        sessionManager.destroy();
-        sessionManager = SessionManager.getInstance(model);
-        sessionManager.loginToSession(personInFilteredList.getNric(), personInFilteredList.getPassword());
-
-        assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_notLoggedIn_failure() {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(descriptor);
