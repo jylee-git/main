@@ -84,7 +84,6 @@ public class SetPriorityLevelCommand extends Command {
                 personToEdit.getSchedule());
 
         model.updatePerson(personToEdit, editedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
 
         return new CommandResult(String.format(MESSAGE_CHANGE_PLVL_SUCCESS,
