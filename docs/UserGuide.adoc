@@ -86,7 +86,7 @@ Format: `help`
 [NOTE]
 ====
 * Refer to <<Appendix A: List of prefixes in the application, Appendix A>> for the list of prefixes and its' constraints.
-* This operation requires administrator priviledge to perform.
+* This operation requires administrator privilege to perform.
 ====
 
 Adds an employee to the address book +
@@ -186,8 +186,13 @@ Sorts the employee names in the list in ascending order
 Sorts the department names in the list in descending order
 ====
 
+=== List department : `listdepartment`
+Shows a list of departments available in the addressbook. +
+Format: `listdepartment` +
+Alias: `ld`
+
 === Filtering department : `filterdepartment`
-Filter departments and list out the employees who are in the department +
+Filter departments and list out the employees who are in the department. +
 Format: `filterdepartment KEYWORD [MORE KEYWORDS]` +
 Alias: `fd`
 
@@ -211,10 +216,31 @@ Returns a list of employees who are in `Junior Management`.
 Returns a list of employees who are in `Junior Management` and `Senior Management`.
 ====
 
+=== Change the department of an employee : `setdepartment`
+[NOTE]
+====
+* This operation requires administrator privilege to perform.
+* Administrator can only change the departments of other employees but not himself/herself.
+====
+Changes the department of an employee. +
+Format: `setdepartment INDEX d/DEPARTMENT` +
+Alias: `sd`
+****
+* Changes the employee's department at the specified `INDEX`.
+* The index refers to the index number shown in the displayed employee list.
+* The index *must be a positive integer* 1, 2, 3, ...
+* Refer to the *Department* section at *Appendix A* for the appropriate input for the department name.
+****
+
+Example: `setdepartment 2 d/Junior Management`
+====
+Changes the employee department with ID 2 in the address book to `Junior Management`.
+====
+
 === Deleting a person : `delete`
 [NOTE]
 ====
-This operation requires administrator priviledge to perform.
+This operation requires administrator privilege to perform.
 ====
 
 Deletes the specified person from the address book. +
@@ -294,7 +320,7 @@ Delete the specified leave from leave list.
 ====
 * Requires the user to log in before using the command.
 * User can only delete leave application he/she requested.
-* To delete other user's application, requires adminstrator priviledge to perform.
+* To delete other user's application, requires adminstrator privilege to perform.
 ====
 
 Format: `deleteleave INDEX`
@@ -492,7 +518,7 @@ Approve the 3rd request made by the employee.
 === Change priority level of employee: `setplvl`
 [NOTE]
 ====
-* This operations requires administrator priviledge to perform.
+* This operations requires administrator privilege to perform.
 * Refer to the Priority level section in Appendix A for the appropriate input value.
 ====
 Sets the priority level of an employee. +
@@ -502,7 +528,7 @@ Example: `priority ic/s1234567a superuser/2`
 === Restrict access to BankAB : `restrict`
 [NOTE]
 ====
-This operation requires those with priviledge of `I.T. Unit` to perform.
+This operation requires those with privilege of `I.T. Unit` to perform.
 ====
 Restrict access to BankAB for maintenance to all employees except superusers level 4 (Technicians).
 Anyone below superuser level 4 priority will not be able to log into the application. +
@@ -538,7 +564,9 @@ There is no need to save manually.
 •	*Find employee*: `find KEYWORD [MORE_KEYWORDS]`
 •	*Approve/Reject off request*: `request ic/s1234567a mode/approve (3)`
 •	*Sort address book contacts*: `sort name asc`
+•	*List available departments*: `listdepartment`
 •	*Filter departments*: `filterdepartment junior`
+•	*Change department of an employee*: `setdepartment INDEX d/DEPARTMENT`
 •	*Deleting employee*: `delete INDEX [MORE_INDEX]`
 •	*Change priority level of employee*: `setplvl ic/NRIC plvl/LEVEL`
 •	*Add leave application*: `leave date/DATE`

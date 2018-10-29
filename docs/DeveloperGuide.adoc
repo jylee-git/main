@@ -1131,7 +1131,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |User	|Search for a specific contact	|Obtain the particulars of the contact easily
 |`* * *` |User	|List the manpower for the day	|Allocate my manpower accordingly
 |`* * *` |User	|Sort my address book by name and department	|Look for contacts that I want easily
-|`* * *` |User	|Filter out and view my relevant colleague’s contact details	|Spend less time searching for their contact details and contact them
+|`* * *` |User	|List out the departments that are available	|Know what departments I can filter
+|`* * *` |User	|Filter out and view my relevant colleague’s department	|Spend less time searching for their contact details and contact them
+|`* * *` |Elevated User	|Change the department of the employees	|They are allocated at the correct department
 |`* * *` |User	|Set password to my address book	|Prevent unauthorized access to my address book
 |`* * *` |User	|Access my remaining off days	|Apply for my off
 |`* * *` |User	|Check in and out during my work days	|I will be able to view the number of hours I have worked for
@@ -1262,21 +1264,103 @@ Use case resumes to step 4.
 
 . User enters command to check payroll.
 . AddressBook shows the user payroll.
++
 Use case ends.
 
 === Use case: Check notification
 *MSS*
 
-. User enters command to check for notification
-. AddressBook list out notifications
+. User enters command to check for notification.
+. AddressBook list out notifications.
 +
 Use case ends.
 
-=== Use case: Sort contact by department
+=== Use case: Sort contact
 *MSS*
 
 . User enters sort command.
-. AddressBook shows a list of sorted names by their department.
+. AddressBook prompts user to enter the field and order of sort.
+. User enters the field and order to sort.
+. AddressBook shows a sorted list by the field and order.
++
+Use case ends.
+
+*Extensions*
+
+* 4a. The given field is invalid.
+** 4a1. AddressBook shows an error message.
++
+Use case resumes to step 2.
+
+* 4b. The given order is invalid.
+** 4b1. AddressBook shows an error message.
++
+Use case resumes to step 2.
+
+=== Use case: List department
+*MSS*
+
+. User enters listdepartment command.
+. AddressBook shows a list of available departments.
++
+Use case ends.
+
+=== Use case: Filter department
+*MSS*
+
+. User enters filterdepartment command.
+. AddressBook prompts to enter the departments to filter.
+. User enters the department name to filter.
+. AddressBook shows the list of filtered department.
++
+Use case ends.
+
+*Extensions*
+
+* 4a. The keyword `management` is entered.
+** 4a1. AddressBook shows an error message.
++
+Use case resumes to step 2.
+
+* 4b. The keyword entered is not found.
+** 4b1. AddressBook shows an empty list.
++
+Use case ends.
+
+=== Use case: Change department of user
+*MSS*
+
+. User enters setdepartment command.
+. AddressBook prompts to enter the INDEX and department name to change.
+. User enters the index and the department name.
+. AddressBook updates the department of the user at the stated index.
++
+Use case ends.
+
+*Extensions*
+
+* 4a. User is not logged in.
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 4b. User does not have the correct priority level.
+** 4b1. AddressBook shows an error message.
++
+Use case ends.
+
+* 4c. User keys in an invalid INDEX.
+** 4c1. AddressBook shows an error message.
++
+Use case ends.
+
+* 4d. User keys in an invalid department name.
+** 4d1. AddressBook shows an error message.
++
+Use case ends.
+
+* 4e. User tries to edit his/her own department.
+** 4e1. AddressBook shows an error message.
 +
 Use case ends.
 
