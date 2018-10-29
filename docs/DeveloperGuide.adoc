@@ -604,9 +604,6 @@ public CommandResult execute(Model model, CommandHistory history) throws Command
         // ... Complete the execution, now that user is verified to be an admin.
     }
 ----
-<1> Check if the user is logged in.
-<2> Check if the logged in user has a priority level of ADMINISTRATOR and above.
-** This function checks if the user is logged in at the same time.
 
 The following sequence diagram below shows the flow of how the feature works:
 
